@@ -134,7 +134,7 @@
   - (d) runs `node -e "require('@nestbolt/audit-log')"` to prove that CommonJS consumers can load the package through `require(esm)`
 
   Verify: `pnpm run build && pnpm run test:exports` exits 0.
-- [ ] 6.4 Add `scripts/bun-smoke.mjs` as specified in design.md D11: plain JS, the built `dist`, MikroORM on libSQL `:memory:`, create, update and remove, three records asserted, and `/typeorm` imported for loading only. Add a `bun-smoke` job to `.github/workflows/tests.yml` with these steps:
+- [x] 6.4 Add `scripts/bun-smoke.mjs` as specified in design.md D11: plain JS, the built `dist`, MikroORM on libSQL `:memory:`, create, update and remove, three records asserted, and `/typeorm` imported for loading only. Add a `bun-smoke` job to `.github/workflows/tests.yml` with these steps:
   - `actions/setup-node` with `"26"`
   - pnpm setup
   - `pnpm install --frozen-lockfile && pnpm run build`
@@ -142,6 +142,7 @@
   - `bun --version && bun scripts/bun-smoke.mjs`
 
   Verify: locally `pnpm run build && bun scripts/bun-smoke.mjs` exits 0, and the job passes on the PR. If an upstream Bun or `libsql` blocker fails it, apply the D11 fallback and record the blocker.
+  Verified in CI on PR #2 (https://github.com/tailshomelab/audit-log/pull/2), commit bd61f52: `test` (Node 26) and `bun-smoke` passed.
 - [x] 6.5 Rewrite the top of `README.md` and its TypeORM section:
   - import paths (core from root, adapters from subpaths)
   - `TypeOrmAuditLogModule` and `TypeOrmAuditLogEntity`
@@ -152,7 +153,8 @@
 
 ## 7. Integration checks
 
-- [ ] 7.1 On Node 26, run the full gates once: `pnpm run lint && pnpm run build && pnpm test && pnpm run test:exports && bun scripts/bun-smoke.mjs`. Verify: all exit 0, and both parity specs pass with identical scenario lists.
+- [x] 7.1 On Node 26, run the full gates once: `pnpm run lint && pnpm run build && pnpm test && pnpm run test:exports && bun scripts/bun-smoke.mjs`. Verify: all exit 0, and both parity specs pass with identical scenario lists.
+  Verified in CI on PR #2 (https://github.com/tailshomelab/audit-log/pull/2), commit bd61f52: `test` (Node 26) and `bun-smoke` passed.
 - [x] 7.2 Run `pnpm pack --dry-run`. Verify: the tarball contains `dist/index.js`, `dist/typeorm/` and `dist/mikro-orm/`, and no `test/` or `scripts/` files.
 - [x] 7.3 Run `openspec validate add-mikroorm-libsql-adapters --strict`. Verify: it reports valid, and each spec scenario maps to a test from phases 3 to 6.
 
