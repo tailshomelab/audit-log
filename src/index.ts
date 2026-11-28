@@ -1,44 +1,46 @@
-// Module
-export { AuditLogModule } from "./audit-log.module";
+// The ORM-free core. Adapters live at "@nestbolt/audit-log/typeorm" and
+// "@nestbolt/audit-log/mikro-orm"; this entry point imports no ORM package.
 
-// Constants
-export { AUDIT_LOG_OPTIONS, AUDITABLE_METADATA_KEY } from "./audit-log.constants";
+// Constants and injection tokens
+export {
+  AUDIT_LOG_OPTIONS,
+  AUDITABLE_METADATA_KEY,
+  AUDIT_LOG_STORAGE,
+  AUDIT_LOG_ACTOR_RESOLVER,
+} from "./core/audit-log.constants.js";
 
 // Service
-export { AuditLogService } from "./audit-log.service";
-export type { AuditLogQueryOptions, ManualAuditLogParams } from "./audit-log.service";
-
-// Entity
-export { AuditLogEntity } from "./entities";
-
-// Subscriber
-export { AuditSubscriber } from "./audit-log.subscriber";
+export { AuditLogService } from "./core/audit-log.service.js";
+export type { ManualAuditLogParams } from "./core/audit-log.service.js";
 
 // Decorators
-export { Auditable } from "./decorators";
-export type { AuditableOptions } from "./decorators";
+export { Auditable } from "./core/decorators/index.js";
+export type { AuditableOptions } from "./core/decorators/index.js";
 
 // Mixins
-export { AuditableMixin } from "./mixins";
-export type { AuditableMixinEntity } from "./mixins";
+export { AuditableMixin } from "./core/mixins/index.js";
+export type { AuditableMixinEntity } from "./core/mixins/index.js";
 
 // Events
-export { AUDIT_LOG_EVENTS } from "./events";
-export type { AuditLoggedEvent } from "./events";
+export { AUDIT_LOG_EVENTS } from "./core/events/index.js";
+export type { AuditLoggedEvent } from "./core/events/index.js";
 
 // Exceptions
-export { AuditLogNotInitializedException } from "./exceptions";
+export { AuditLogNotInitializedException } from "./core/exceptions/index.js";
 
-// Interfaces
+// Record, storage contract and option types
 export type {
   ActorResolver,
   AuditActor,
-  AuditContext,
   AuditAction,
   AuditLogModuleOptions,
   AuditLogAsyncOptions,
-} from "./interfaces";
+  AuditLogRecord,
+  AuditLogDraft,
+  AuditLogStorage,
+  AuditLogQueryOptions,
+} from "./core/interfaces/index.js";
 
 // Utils
-export { computeDiff } from "./utils";
-export type { FieldDiff } from "./utils";
+export { computeDiff } from "./core/utils/index.js";
+export type { FieldDiff } from "./core/utils/index.js";
